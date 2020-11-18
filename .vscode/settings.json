@@ -1,5 +1,6 @@
 {
     "files.associations": {
         "*.spec": "python"
-    }
+    },
+    "cSpell.enabled": true
 }
