@@ -86,8 +86,9 @@ def main():
     # TODO plugin hook after_scale
 
     files = wave.write_wav(args, dataframe)
-    for f in files:
-        plot.draw_window(f)
+
+    # for f in files:
+    #     plot.draw_window(f)
 
     # TODO pluin hook after_save
 
