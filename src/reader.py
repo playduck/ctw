@@ -18,7 +18,9 @@ def rename_axes(args, read_df):
         if axis == xaxis:
             names[xaxis] = "x"
             length = len(read_df[xaxis].values)
-        else:
+
+    for axis in read_df.columns:
+        if axis != xaxis:
             if len(read_df[axis].values) != length:
                 logging.error(
                     "Dataframe Length Missmatch! All columns need to have the same length. ({} len: {} !=  {} len: {} )".format(
