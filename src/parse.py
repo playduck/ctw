@@ -74,7 +74,7 @@ def parse_args():
         type=str)
     # Plugin
     prog_group.add_argument("-p", "--plugin", dest="plugin",
-                            help="Custom python plugin path",
+                            help="Custom python plugin path (only works in an interactive python shell, not a binary)",
                             default=16, type=str)
 
     if len(sys.argv) == 1:

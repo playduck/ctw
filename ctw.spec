@@ -5,10 +5,12 @@ import os
 import sys
 import importlib
 
+print("Platform: ", sys.platform)
+
 block_cipher = None
 hiddenimports=["pkg_resources"]
 
-a = Analysis(["./src/main.py"],
+a = Analysis([os.path.abspath("./src/main.py")],
             pathex=[os.path.abspath("./")],
             binaries=None,
             datas=None,
@@ -19,7 +21,8 @@ a = Analysis(["./src/main.py"],
             win_no_prefer_redirects=False,
             win_private_assemblies=False,
             cipher=block_cipher,
-            noarchive=False)
+            noarchive=False
+)
 
 pyz = PYZ(a.pure, a.zipped_data,
             cipher=block_cipher)
@@ -38,7 +41,7 @@ if sys.platform == "darwin":
             runtime_tmpdir=None,
             console=False,
             icon=None
-    )
+)
 elif sys.platform == "win32" or sys.platform == "win64" or sys.platform == "linux":
     exe = EXE(pyz,
             a.scripts,
@@ -51,20 +54,30 @@ elif sys.platform == "win32" or sys.platform == "win64" or sys.platform == "linu
             strip=False,
             upx=True,
             runtime_tmpdir=None,
-            console=False,
+            console=True,
             icon=None
 )
 
 if sys.platform == "darwin":
     app = BUNDLE(exe,
-                    name="ctw.app",
-                    info_plist={
-                        "NSHighResolutionCapable": "True",
-                        "LSBackgroundOnly": "False",
-                        "NSRequiresAquaSystemAppearance": "True"
-                        # should be false to support dark mode
-                        # known bug: https://github.com/pyinstaller/pyinstaller/issues/4615 with pyinstaller
-                        # need to recompile pyinstaller with SDK >= 10.13
-                    },
-                    icon=None
-                    )
+            name="ctw.app",
+            info_plist={
+                "NSHighResolutionCapable": "True",
+                "LSBackgroundOnly": "False",
+                "NSRequiresAquaSystemAppearance": "True"
+                # should be false to support dark mode
+                # known bug: https://github.com/pyinstaller/pyinstaller/issues/4615 with pyinstaller
+                # need to recompile pyinstaller with SDK >= 10.13
+            },
+            icon=None
+)
+
+elif sys.platform == "win32" or sys.platform == "win64" or sys.platform == "linux":
+    coll = COLLECT(exe,
+            a.binaries,
+            a.zipfiles,
+            a.datas,
+            strip=False,
+            upx=True,
+            name="ctw"
+)
