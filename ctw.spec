@@ -6,15 +6,16 @@ import sys
 import importlib
 
 block_cipher = None
+hiddenimports=["pkg_resources"]
 
 a = Analysis(["./src/main.py"],
             pathex=[os.path.abspath("./")],
-            binaries=[],
-            datas=[],
-            hiddenimports=[],
-            hookspath=[],
-            runtime_hooks=[],
-            excludes=[],
+            binaries=None,
+            datas=None,
+            hiddenimports=hiddenimports,
+            hookspath=None,
+            runtime_hooks=None,
+            excludes=None,
             win_no_prefer_redirects=False,
             win_private_assemblies=False,
             cipher=block_cipher,

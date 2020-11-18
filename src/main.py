@@ -9,7 +9,7 @@ from timeit import default_timer as timer
 
 import manipulate
 import parse
-import plot
+# import plot
 import reader
 import wave_writer as wave
 
