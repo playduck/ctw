@@ -8,7 +8,11 @@ import importlib
 print("Platform: ", sys.platform)
 
 block_cipher = None
-hiddenimports=["pkg_resources"]
+hiddenimports=[
+    "pkg_resources",
+    "matplotlib",
+    "pylab"
+]
 
 a = Analysis([os.path.abspath("./src/main.py")],
             pathex=[os.path.abspath("./")],
@@ -54,7 +58,7 @@ elif sys.platform == "win32" or sys.platform == "win64" or sys.platform == "linu
             strip=False,
             upx=True,
             runtime_tmpdir=None,
-            console=True,
+            console=False,
             icon=None
 )
 
