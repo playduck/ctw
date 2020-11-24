@@ -24,6 +24,10 @@ Eine Commandline Utility um beliebige `.csv` Dateien in stark anpassbare `.wav` 
             - [wav Optionen](#wav-optionen)
             - [Programm Optionen](#programm-optionen)
     - [Beispiele](#beispiele)
+    - [Plugins](#plugins)
+    - [Interne Funktionsweise](#interne-funktionsweise)
+        - [CSV Parsing](#csv-parsing)
+        - [Data Handling](#data-handling)
     - [Zukunft](#zukunft)
 
 ## Installation
@@ -120,7 +124,7 @@ Aufbau:
 | Kurz | Argument      | Beschreibung                         | Standard | Notizen                                    |
 | ---- | ------------- | :----------------------------------- | -------- | :----------------------------------------- |
 | `-l` | `--log-level` | Ausgabe Level                        | `info`   | Mögliche Optionen: `none`, `info`, `debug` |
-| `-p` | `--plugin`    | Pfad und Datei eines Python Packages | `None`   |                                            |
+| `-p` | `--plugin`    | Pfad und Datei eines Python Packages | `None`   | Mehrere `-p` Flags sind möglich            |
 
 ---
 
@@ -144,6 +148,58 @@ Mit template plugin und anderem csv Format:
 ```
 
 ---
+
+## Plugins
+
+**Momentan sind Plugins nur im interaktiven Modus (keine binary) ausführbar.**
+
+Plugins sind python skripte, die vom Nutzer angegeben werden und die internen Daten während der Ausführung modifizieren können.
+Damit können beispielsweise eigene Algorithmen implementiert werden oder die Daten einfach genauer beobachtet werden.
+
+Ein [Beispiel Plugin](./test/plugin_template/__init__.py) steht zur verfügung.
+Die Funktionssignaturen können sich während des Developments verändern.
+Zu beachten ist, dass importierte Packete sowohl für ctw.py als auch für das plugin zur verfügung stehen.
+(Ergo: Entweder Packete global installieren oder ctw und plugin in gleichem venv ausführen.)
+
+Mehrere Plugins könnnen gleichzeitig genutzt werden, indem mehrere `-p` flags benutzt werden.
+Die Reihenfolge der plugins ist von der Reihenfolge des Commands abhängig.
+
+## Interne Funktionsweise
+
+### CSV Parsing
+
+CSV Dateien sollten in der ersten Zeile einen Header haben, welche die Spalten benennte.
+Es sollte wenigstens eine Zeile existieren.
+Der Delimiter/Seperator und Zehner-Stelle könnnen mit `-sep` und `-dec` respektiv angepasst werden.
+
+Wird keine explizite X-Achse angegeben, wird die erste (Spalte ganz links) als X-Achse verwendet.
+
+Existiert nur eine Spalte, wird ein X-Achse erstellt. Jedes Sample (Y-Wert) wird dann eine Sekunde gegeben.
+Diese Option kann auch mit `--gen-x` explizit verwendet werden.
+
+Wird mit `-x` eine X-Achse angegeben, wird diese verwendet.
+Die X-Achse muss stetig monoton steigen.
+
+Existieren mehr als drei Spalten (Zwei Spalten mit `--gen-x`), werden weitere Spalten als weitere "Signale" interpretiert.
+Im Normalfall werden mehrere .wav Dateien (mit gleicher X-Achse) erstellt.
+Ist die `--multichannel` flag gesetz wird versucht die weiteren Signale als weitere Kanäle in eine .wav einzubringen.
+
+### Data Handling
+
+1. Plugin init hook
+1. CSV Parsing
+2. Plugin read hook
+3. Daten Manipulieren
+    1. Validieren
+    2. Normalisiern (Wertemenge auf -1.0 bis 1.0)
+    3. Bias hinzufügen
+    4. Interpolieren
+    5. Clipping
+4. Plugin modify hook
+5. Daten Skalieren (Auf angegebenen Datentyp und dessen Reichweite konvertieren)
+6. Plugin scale hook
+7. wav schreiben
+8. Plugin save hook
 
 ## Zukunft
 

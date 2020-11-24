@@ -11,9 +11,9 @@ in keiner genauen Reihenfolge
     - [ ] graphics
     - [ ] examples
 - [ ] display / plot
-- [ ] plugin
-    - [ ] more plugin hooks
-    - [ ] multiple plugins
+- plugin
+    - [x] more plugin hooks
+    - [x] multiple plugins
     - [ ] plugin support in frozen mode (may be impossible)
 - UI/UX
     - [ ] interactive option menu?
