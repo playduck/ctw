@@ -120,7 +120,7 @@ Aufbau:
 | Kurz | Argument      | Beschreibung                         | Standard | Notizen                                    |
 | ---- | ------------- | :----------------------------------- | -------- | :----------------------------------------- |
 | `-l` | `--log-level` | Ausgabe Level                        | `info`   | Mögliche Optionen: `none`, `info`, `debug` |
-| `-p` | `--plugin`    | Pfad und Datei eines Python Packages | `None`   |                                            |
+| `-p` | `--plugin`    | Pfad und Datei eines Python Packages | `None`   | Mehrere `-p` Flags sind möglich            |
 
 ---
 
