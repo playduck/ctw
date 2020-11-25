@@ -43,7 +43,7 @@ def main():
     log.debug(args)
 
     if not Path(args.infile[0]).exists():
-        log.error("File [bold red]{}[/] (infile) does not exist or could not be found!".format(
+        log.critical("File [bold red]{}[/] (infile) does not exist or could not be found!".format(
              str(Path(args.infile[0]))
         ))
         sys.exit(1)
@@ -57,7 +57,7 @@ def main():
 
     dataframe = reader.read_file(args)
     if dataframe is None:
-        log.error(
+        log.critical(
             "Dataframe could not be parsed. There probably is additional output above. Exiting")
         sys.exit(0)
 
