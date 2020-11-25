@@ -27,6 +27,9 @@ def import_plugin(args) -> None:
             "Application is Frozen! Plugins are not supportet in a frozen state, since they require dynamic imports and execution!\nPlugin will not be used.")
         return None
 
+    if args.plugin is None or args.plugin == []:
+        return None
+
     for plugin in args.plugin:
         if (plugin is not None) and (plugin != []):
             if not os.path.exists(plugin):
@@ -61,6 +64,8 @@ def call_plugin(state, args, dataframe=None) -> any:
     # return if frozen
     if getattr(sys, 'frozen', False):
         return dataframe
+
+    plugin_dataframe = None
 
     for plugin in plugins:
         if plugin is not None:
