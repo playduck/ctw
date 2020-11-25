@@ -3,25 +3,39 @@ import sys
 import importlib
 import os
 
+from rich.logging import RichHandler
+
+log = logging.getLogger("rich")
 plugins = list()
+
+log = logging.getLogger("rich")
+logging.basicConfig(
+    level="NOTSET",
+    format="%(message)s",
+    datefmt="[%X]",
+    handlers=[RichHandler(
+        rich_tracebacks=True,
+        markup=True,
+    )]
+)
 
 def import_plugin(args) -> None:
     global plugins
 
     if getattr(sys, 'frozen', False):
-        logging.error(
+        log.error(
             "Application is Frozen! Plugins are not supportet in a frozen state, since they require dynamic imports and execution!\nPlugin will not be used.")
         return None
 
     for plugin in args.plugin:
         if (plugin is not None) and (plugin != []):
             if not os.path.exists(plugin):
-                logging.error("Could not find", plugin, "to be a valid path")
+                log.error("Could not find", plugin, "to be a valid path")
                 continue
             # split plugin path
             plugin_path, plugin_name = os.path.split(plugin)
 
-            logging.debug(
+            log.debug(
                 "loading plugin at {} {}".format(
                     plugin_path, plugin_name))
 
@@ -32,16 +46,17 @@ def import_plugin(args) -> None:
             try:
                 plugins.append(importlib.import_module(plugin_name))
             except Exception as e:
-                logging.error(
+                log.error(
                     'Exception Occured while importing plugin',
                     exc_info=e)
 
     # call plugins init
     call_plugin(0, args)
 
+
 def call_plugin(state, args, dataframe=None) -> any:
     global plugins
-    logging.debug("Calling Plugin with State: {}".format(state))
+    log.debug("Calling Plugin with State: {}".format(state))
 
     # return if frozen
     if getattr(sys, 'frozen', False):
@@ -52,19 +67,23 @@ def call_plugin(state, args, dataframe=None) -> any:
             plugin_dataframe = dataframe
             try:
                 if state == 0:
-                    plugin.init_hook(args)
+                    plugin.init_hook(log, args)
                 elif state == 1:
-                    plugin_dataframe = plugin.read_hook(args, plugin_dataframe)
+                    plugin_dataframe = plugin.read_hook(
+                        log, args, plugin_dataframe)
                 elif state == 2:
-                    plugin_dataframe = plugin.modify_hook(args, plugin_dataframe)
+                    plugin_dataframe = plugin.modify_hook(
+                        log, args, plugin_dataframe)
                 elif state == 3:
-                    plugin_dataframe = plugin.scale_hook(args, plugin_dataframe)
+                    plugin_dataframe = plugin.scale_hook(
+                        log, args, plugin_dataframe)
                 elif state == 4:
-                    plugin.save_hook(args, plugin_dataframe)
+                    plugin.save_hook(log, args, plugin_dataframe)
 
             except Exception as e:
-                logging.error(
-                    'Exception Occured while calling plugin (State: {})'.format(state),
+                log.error(
+                    'Exception Occured while calling plugin (State: {})'.format(
+                        state),
                     exc_info=e)
 
     if plugin_dataframe is not None:

@@ -4,6 +4,8 @@ import numpy as np
 import pandas as pd
 import scipy.interpolate
 
+log = logging.getLogger("rich")
+
 
 def manipulate_data(args, data):
     return handle_clipping(
@@ -17,11 +19,11 @@ def manipulate_data(args, data):
 
 
 def validate_data(args, data):
-    logging.debug("Validating Data")
+    log.debug("Validating Data")
     for col in data.columns:
         if col == "x":
             if not np.all(np.diff(data[col]) >= 0):
-                logging.warning(
+                log.warning(
                     "X-Axis is not strictly monotonously increasing.")
 
         np.nan_to_num(data[col], copy=False, nan=0.0, posinf=None, neginf=None)
@@ -39,7 +41,7 @@ def normalize_data(args, data):
         maxColVal = max(data[col].max(), abs(data[col].min()))
         maxValue = max(maxColVal, maxValue)
 
-    logging.debug("Max Value is {}".format(maxValue))
+    log.debug("Max Value is {}".format(maxValue))
 
     for col in data.columns:
         if col == "x":
@@ -52,7 +54,7 @@ def normalize_data(args, data):
 
 
 def add_bias(args, data):
-    logging.debug("Adding Bias")
+    log.debug("Adding Bias")
     for col in data.columns:
         if col == "x":
             continue
@@ -64,14 +66,14 @@ def add_bias(args, data):
 
 
 def interpolate_data(args, data):
-    logging.debug("Interpolating Data")
+    log.debug("Interpolating Data")
 
     start = data["x"].values[0].astype(np.int64)
     stop = data["x"].values[-1].astype(np.int64)
     delta = stop - start
     samples = int(args.samplerate * delta)
 
-    logging.debug(
+    log.debug(
         "from {}s to {}s (delta: {}s) with {} samples".format(
             start, stop, delta, samples))
 
@@ -104,7 +106,7 @@ def interpolate_data(args, data):
 
 
 def handle_clipping(args, data):
-    logging.debug("Clipping Data ({})".format(args.clipping))
+    log.debug("Clipping Data ({})".format(args.clipping))
     for col in data.columns:
         if col == "x":
             continue

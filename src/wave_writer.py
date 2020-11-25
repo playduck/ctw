@@ -4,13 +4,15 @@ import os
 import numpy as np
 from scipy.io.wavfile import write
 
+log = logging.getLogger("rich")
+
 dt = None
 
 
 def scale_data(args, data):
     global dt
 
-    logging.debug("scaling data to {}".format(args.bps))
+    log.debug("scaling data to {}".format(args.bps))
 
     # floating
     if args.bps == "32f":
@@ -50,7 +52,7 @@ def write_wav(args, data):
     global dt
 
     if args.multichanel:
-        logging.debug("Writing multichanel file at {}".format(
+        log.debug("Writing multichanel file at {}".format(
             args.outfile[0]
         ))
 
@@ -67,7 +69,7 @@ def write_wav(args, data):
         for i in range(diff):
             files.append("{}_{}{}".format(last_file_name, i, extension))
 
-        logging.debug("Writing files at {}".format(
+        log.debug("Writing files at {}".format(
             files
         ))
 
