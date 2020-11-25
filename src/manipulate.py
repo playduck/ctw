@@ -74,7 +74,7 @@ def interpolate_data(args, data):
     samples = int(args.samplerate * delta)
 
     log.debug(
-        "from {}s to {}s (delta: {}s) with {} samples".format(
+        "from {} s to {} s (delta: {} s) with {} samples".format(
             start, stop, delta, samples))
 
     xnew = np.linspace(start=start, stop=stop, num=samples)
