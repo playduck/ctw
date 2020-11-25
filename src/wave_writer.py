@@ -1,5 +1,6 @@
 import logging
 import os
+from pathlib import Path
 
 import numpy as np
 from scipy.io.wavfile import write
@@ -53,7 +54,7 @@ def write_wav(args, data):
 
     if args.multichanel:
         log.debug("Writing multichanel file at {}".format(
-            args.outfile[0]
+            str(Path(args.outfile[0]).resolve())
         ))
 
         del data["x"]
@@ -70,7 +71,7 @@ def write_wav(args, data):
             files.append("{}_{}{}".format(last_file_name, i, extension))
 
         log.debug("Writing files at {}".format(
-            files
+            [str(Path(f).resolve()) for f in files]
         ))
 
         for index, col in enumerate(data.columns):

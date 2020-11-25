@@ -6,6 +6,7 @@ from rich.traceback import install
 import os
 import sys
 from timeit import default_timer as timer
+from pathlib import Path
 
 import manipulate
 import parse
@@ -39,10 +40,17 @@ def main():
 
     #  set log level
     logging.getLogger("rich").setLevel(loglevel[args.loglevel])
-
     log.debug(args)
+
+    if not Path(args.infile[0]).exists():
+        log.error("File [bold red]{}[/] (infile) does not exist or could not be found!".format(
+             str(Path(args.infile[0]))
+        ))
+        sys.exit(1)
+
     log.info("Converting {} to {}".format(
-        args.infile, args.outfile
+        str(Path(args.infile[0]).resolve()),
+        str(Path(args.outfile[0]).resolve())
     ))
 
     plugin_handler.import_plugin(args)
