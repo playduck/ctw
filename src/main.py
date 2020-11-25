@@ -18,11 +18,6 @@ import plugin_handler
 # setup logging
 # needs to be global, since other files rely on it
 install() # install rich exception handler
-loglevel = {
-    "none": logging.NOTSET,
-    "info": logging.INFO,
-    "debug": logging.DEBUG
-}
 log = logging.getLogger("rich")
 logging.basicConfig(
     level="NOTSET",
@@ -33,13 +28,20 @@ logging.basicConfig(
         markup=True
     )]
 )
+loglevel = {
+    "info": logging.INFO,
+    "debug": logging.DEBUG
+}
 
 def main():
     start = timer()
     args = parse.parse_args()
 
     #  set log level
-    logging.getLogger("rich").setLevel(loglevel[args.loglevel])
+    if args.loglevel == "none":
+        log.propagate = False
+    else:
+        logging.getLogger("rich").setLevel(loglevel[args.loglevel])
     log.debug(args)
 
     if not Path(args.infile[0]).exists():
