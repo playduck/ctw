@@ -9,7 +9,7 @@ warnings.filterwarnings(
     "ignore",
     "(?s).*MATPLOTLIBDATA.*",
     category=UserWarning)
-from pylab import *
+from pylab import *  # nopep8
 
 # stolen from
 # https://web.archive.org/web/20161203074728/http://jaganadhg.freeflux.net:80/blog/archive/2009/09/09/plotting-wave-form-and-spectrogram-the-pure-python-way.html

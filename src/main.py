@@ -1,9 +1,12 @@
 #!/usr/bin/env python3
 
 import logging
+from rich.logging import RichHandler
+from rich.traceback import install
 import os
 import sys
 from timeit import default_timer as timer
+from pathlib import Path
 
 import manipulate
 import parse
@@ -12,28 +15,49 @@ import reader
 import wave_writer as wave
 import plugin_handler
 
+# setup logging
+# needs to be global, since other files rely on it
+install() # install rich exception handler
 loglevel = {
     "none": logging.NOTSET,
     "info": logging.INFO,
     "debug": logging.DEBUG
 }
+log = logging.getLogger("rich")
+logging.basicConfig(
+    level="NOTSET",
+    format="%(message)s",
+    datefmt="[%X]",
+    handlers=[RichHandler(
+        rich_tracebacks=True,
+        markup=True
+    )]
+)
 
 def main():
     start = timer()
-    logging.basicConfig(format="[%(levelname)s]: %(message)s")
     args = parse.parse_args()
-    logging.getLogger().setLevel(loglevel[args.loglevel])
 
-    logging.debug(args)
-    logging.info("Converting {} to {}".format(
-        args.infile, args.outfile
+    #  set log level
+    logging.getLogger("rich").setLevel(loglevel[args.loglevel])
+    log.debug(args)
+
+    if not Path(args.infile[0]).exists():
+        log.critical("File [bold red]{}[/] (infile) does not exist or could not be found!".format(
+             str(Path(args.infile[0]))
+        ))
+        sys.exit(1)
+
+    log.info("Converting {} to {}".format(
+        str(Path(args.infile[0]).resolve()),
+        str(Path(args.outfile[0]).resolve())
     ))
 
     plugin_handler.import_plugin(args)
 
     dataframe = reader.read_file(args)
     if dataframe is None:
-        logging.error(
+        log.critical(
             "Dataframe could not be parsed. There probably is additional output above. Exiting")
         sys.exit(0)
 
@@ -50,14 +74,14 @@ def main():
     files = wave.write_wav(args, dataframe)
 
     # for f in files:
-        # plot.draw_window(f)
+    # plot.draw_window(f)
 
     plugin_handler.call_plugin(4, args, dataframe)
 
     end = timer()
 
-    logging.info("Done in {}s".format(
-        round(end - start, 3)
+    log.info("Done in [bold blue]{}s[/]".format(
+        str(round(end - start, 3))
     ))
 
 

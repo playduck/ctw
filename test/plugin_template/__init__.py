@@ -1,26 +1,32 @@
 import numpy as np
 import pandas as pd
+import logging
+import argparse
 
 
+def init_hook(log: logging, args: argparse.Namespace) -> None:
 # called once as soon as the plugin is imported
-def init_hook(args) -> None:
-    print(">>> Plugin Init")
+    log.info(">>> Plugin Init")
 
+def read_hook(log: logging, args: argparse.Namespace,
+              dataframe: pd.DataFrame) -> pd.DataFrame:
 # called after Data has been read and tagged
-def read_hook(args, dataframe: pd.DataFrame) -> pd.DataFrame:
-    print(">>> Plugin Read Hook")
+    log.info(">>> Plugin Read Hook")
     return dataframe
 
+def modify_hook(log: logging, args: argparse.Namespace,
+                dataframe: pd.DataFrame) -> pd.DataFrame:
 # called after Data has been modified
-def modify_hook(args, dataframe: pd.DataFrame) -> pd.DataFrame:
-    print(">>> Plugin Modify Hook")
+    log.info(">>> Plugin Modify Hook")
     return dataframe
 
+def scale_hook(log: logging, args: argparse.Namespace,
+               dataframe: pd.DataFrame) -> pd.DataFrame:
 # called after Data has been scaled
-def scale_hook(args, dataframe: pd.DataFrame) -> pd.DataFrame:
-    print(">>> Plugin Scale Hook")
+    log.info(">>> Plugin Scale Hook")
     return dataframe
 
+def save_hook(log: logging, args: argparse.Namespace,
+              dataframe: pd.DataFrame) -> None:
 # called after Data has been saved
-def save_hook(args, dataframe: pd.DataFrame) -> None:
-    print(">>> Plugin Save Hook")
+    log.info(">>> Plugin Save Hook")

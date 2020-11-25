@@ -65,7 +65,7 @@ def parse_args():
         "-l",
         "--log-level",
         dest="loglevel",
-        help="Logging Level",
+        help="log Level",
         choices=[
             "none",
             "info",
