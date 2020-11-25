@@ -164,6 +164,25 @@ Zu beachten ist, dass importierte Packete sowohl für ctw.py als auch für das p
 Mehrere Plugins könnnen gleichzeitig genutzt werden, indem mehrere `-p` flags benutzt werden.
 Die Reihenfolge der plugins ist von der Reihenfolge des Commands abhängig.
 
+**Die plugin Flag `-p` erwartet ein Python Modul.**
+Daher muss der Name des Ordners ohne folgenden Slash angegeben werden.
+
+| ✅ richtig | ❌ falsch |
+|---|---|
+| `-p ./test/plugin_template` | `-p ./test/plugin_template/` |
+
+Standardmäßig wird `__init__.py` aufgerufen und erwartet, dass die Funktionen global im Modul erreichbar sind.
+Das Plugin kann wie jedes andere Python Modul mehere Dateien und anderes besitzen.
+Die erwarteten Funktionen sind:
+
+- init_hook
+- read_hook
+- modify_hook
+- scale_hook
+- save_hook
+
+Als Referenz für Übergabeparameter und erwartete Rückgabetypen siehe das [Beispiel Plugin](./test/plugin_template/__init__.py).
+
 ## Interne Funktionsweise
 
 ### CSV Parsing
