@@ -21,3 +21,5 @@ in keiner genauen Reihenfolge
 - [ ] diffrent arg parser lib?
 - [x] git repo
 - [x] remove werror (not really needed)
+- [ ] Argparse using rich
+    - https://github.com/willmcgugan/rich/issues/67
