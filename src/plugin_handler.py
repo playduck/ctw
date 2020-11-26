@@ -22,14 +22,17 @@ logging.basicConfig(
 def import_plugin(args) -> None:
     global plugins
 
+    # check if plugins are given
+    if args.plugin is None or args.plugin == []:
+        return None
+
+    # plugins are not supported in frozen mode
     if getattr(sys, 'frozen', False):
         log.error(
             "Application is Frozen! Plugins are not supportet in a frozen state, since they require dynamic imports and execution!\nPlugin will not be used.")
         return None
 
-    if args.plugin is None or args.plugin == []:
-        return None
-
+    # search and import plugins
     for plugin in args.plugin:
         if (plugin is not None) and (plugin != []):
             if not os.path.exists(plugin):
