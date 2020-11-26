@@ -119,7 +119,7 @@ Aufbau:
 |        | `--bias`            | DC-Offset              | `0.0`    |                                                                                                    |
 | `-c`   | `--clipping`        | Clipping Methode       | `hard`   | Mögliche Optionen: `hard`, `soft`                                                                  |
 | `-i`   | `--interpolation`   | Interpolations Methode | `linear` | Mögliche Optionen: `nearest`, `linear`, `quadratic`, `cubic`                                       |
-|        | `--multichanel`     | Mono/Mehr Kanäle       |          | Wenn gesetzt werden mehr kanalige (bis 64) wav Dateien erstellt, sonst Mono Dateien pro Spalte     |
+|        | `--multichannel`     | Mono/Mehr Kanäle       |          | Wenn gesetzt werden mehr kanalige (bis 64) wav Dateien erstellt, sonst Mono Dateien pro Spalte     |
 
 #### Programm Optionen
 

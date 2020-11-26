@@ -57,9 +57,9 @@ def parse_args():
                            choices=["nearest", "linear", "quadratic", "cubic"],
                            default="linear", type=str)
     wav_group.add_argument(
-        "--multichanel",
-        dest="multichanel",
-        help="generate multichanel wav file, otherwise multiple single channel files",
+        "--multichannel",
+        dest="multichannel",
+        help="generate multichannel wav file, otherwise multiple single channel files",
         action="store_true")
 
     # programm options

@@ -52,8 +52,8 @@ def scale_data(args, data):
 def write_wav(args, data):
     global dt
 
-    if args.multichanel:
-        log.debug("Writing multichanel file at {}".format(
+    if args.multichannel:
+        log.debug("Writing multichannel file at {}".format(
             str(Path(args.outfile[0]).resolve())
         ))
 
