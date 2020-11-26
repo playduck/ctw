@@ -111,15 +111,15 @@ Aufbau:
 
 #### wav Optionen
 
-| Kurz   | Argument            | Beschreibung           | Standard | Notizen                                                                                        |
-| ------ | ------------------- | :--------------------- | -------- | :--------------------------------------------------------------------------------------------- |
-| `-bps` | `--bits-per-sample` | Bits pro Sample        | `16`     | Mögliche Optionen: `u8`, `16`, `32`, `32f`                                                     |
-| `-sr`  | `--samplerate`      | Abtastrate in Hz       | `44100`  | Nur Ganzzahlige Werte                                                                          |
-| `-m` | `--max`            | Maximal Wert der Daten            | `None` | Bei `None` werden die Daten durch den größten gefundenen Wert geteilt, sonst durch den angegebenen  |
-|        | `--bias`            | DC-Offset              | `0.0`    |                                                                                                |
-| `-c`   | `--clipping`        | Clipping Methode       | `hard`   | Mögliche Optionen: `hard`, `soft`                                                              |
-| `-i`   | `--interpolation`   | Interpolations Methode | `linear` | Mögliche Optionen: `nearest`, `linear`, `quadratic`, `cubic`                                   |
-|        | `--multichanel`     | Mono/Mehr Kanäle       |          | Wenn gesetzt werden mehr kanalige (bis 64) wav Dateien erstellt, sonst Mono Dateien pro Spalte |
+| Kurz   | Argument            | Beschreibung           | Standard | Notizen                                                                                            |
+| ------ | ------------------- | :--------------------- | -------- | :------------------------------------------------------------------------------------------------- |
+| `-bps` | `--bits-per-sample` | Bits pro Sample        | `16`     | Mögliche Optionen: `u8`, `16`, `32`, `32f`                                                         |
+| `-sr`  | `--samplerate`      | Abtastrate in Hz       | `44100`  | Nur Ganzzahlige Werte                                                                              |
+| `-m`   | `--max`             | Maximal Wert der Daten | `None`   | Bei `None` werden die Daten durch den größten gefundenen Wert geteilt, sonst durch den angegebenen |
+|        | `--bias`            | DC-Offset              | `0.0`    |                                                                                                    |
+| `-c`   | `--clipping`        | Clipping Methode       | `hard`   | Mögliche Optionen: `hard`, `soft`                                                                  |
+| `-i`   | `--interpolation`   | Interpolations Methode | `linear` | Mögliche Optionen: `nearest`, `linear`, `quadratic`, `cubic`                                       |
+|        | `--multichanel`     | Mono/Mehr Kanäle       |          | Wenn gesetzt werden mehr kanalige (bis 64) wav Dateien erstellt, sonst Mono Dateien pro Spalte     |
 
 #### Programm Optionen
 
@@ -221,15 +221,15 @@ Ist die `--multichannel` flag gesetz wird versucht die weiteren Signale als weit
 3. Plugin read hook
 4. Daten Manipulieren
    1. Validieren
-    - Alle Invalieden Daten (NaN) werden auf 0 gesetzt
-    - Die X-Achse muss streng monoton steigend sein
+      - Alle Invalieden Daten (NaN) werden auf 0 gesetzt
+      - Die X-Achse muss streng monoton steigend sein
    2. Normalisiern (Wertemenge auf -1.0 bis 1.0)
-    - Die Werte werden durch den mit `-m` angegebenen Wert geteilt, wird kein Wert angegeben, werden sie durch den größten Wert in der Datenmenge (ohne X-Ache) geteilt.
+      - Die Werte werden durch den mit `-m` angegebenen Wert geteilt, wird kein Wert angegeben, werden sie durch den größten Wert in der Datenmenge (ohne X-Ache) geteilt.
    3. Bias hinzufügen
    4. Interpolieren
-    - benutzt die `scipy.interpolate.interp1d` methode, alle Interpolations-argumente sind valide.
+      - benutzt die `scipy.interpolate.interp1d` methode, alle Interpolations-argumente sind valide.
    5. Clipping
-    - Daten die durch die Modifikationen außerhalb des validen Bereichs gekommen sind werden entweder hard oder soft geclipped. Soft-Clipping verzerrt das Signal, lässt aber mehr werte bestehen.
+      - Daten die durch die Modifikationen außerhalb des validen Bereichs gekommen sind werden entweder hard oder soft geclipped. Soft-Clipping verzerrt das Signal, lässt aber mehr werte bestehen.
 5. Plugin modify hook
 6. Daten Skalieren (Auf angegebenen Datentyp und dessen Reichweite konvertieren)
 7. Plugin scale hook
