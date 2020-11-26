@@ -17,7 +17,7 @@ import plugin_handler
 
 # setup logging
 # needs to be global, since other files rely on it
-install() # install rich exception handler
+install()  # install rich exception handler
 log = logging.getLogger("rich")
 logging.basicConfig(
     level="NOTSET",
@@ -33,6 +33,7 @@ loglevel = {
     "debug": logging.DEBUG
 }
 
+
 def main():
     start = timer()
     args = parse.parse_args()
@@ -46,7 +47,7 @@ def main():
 
     if not Path(args.infile[0]).exists():
         log.critical("File [bold red]{}[/] (infile) does not exist or could not be found!".format(
-             str(Path(args.infile[0]))
+            str(Path(args.infile[0]))
         ))
         sys.exit(1)
 

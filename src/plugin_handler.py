@@ -19,6 +19,7 @@ logging.basicConfig(
     )]
 )
 
+
 def import_plugin(args) -> None:
     global plugins
 

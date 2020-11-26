@@ -35,7 +35,7 @@ def validate_data(args, data):
 def normalize_data(args, data):
     maxValue = 0
 
-    if args.maxVal == None:
+    if args.maxVal is None:
         log.debug("No Max Value specified, finding one from given Data")
         for col in data.columns:
             if col == "x":
