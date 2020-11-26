@@ -115,6 +115,7 @@ Aufbau:
 | ------ | ------------------- | :--------------------- | -------- | :--------------------------------------------------------------------------------------------- |
 | `-bps` | `--bits-per-sample` | Bits pro Sample        | `16`     | Mögliche Optionen: `u8`, `16`, `32`, `32f`                                                     |
 | `-sr`  | `--samplerate`      | Abtastrate in Hz       | `44100`  | Nur Ganzzahlige Werte                                                                          |
+| `-m` | `--max`            | Maximal Wert der Daten            | `None` | Bei `None` werden die Daten durch den größten gefundenen Wert geteilt, sonst durch den angegebenen  |
 |        | `--bias`            | DC-Offset              | `0.0`    |                                                                                                |
 | `-c`   | `--clipping`        | Clipping Methode       | `hard`   | Mögliche Optionen: `hard`, `soft`                                                              |
 | `-i`   | `--interpolation`   | Interpolations Methode | `linear` | Mögliche Optionen: `nearest`, `linear`, `quadratic`, `cubic`                                   |
@@ -139,10 +140,16 @@ Minimum working example:
 ./ctw.py ./test/data/data0.csv ./out0.wav
 ```
 
-Mit Interpolation, soft clipping (und impliziert generierter X-Achse):
+Werte als Prozentualer Wert (zwischen -100% und 100%):
 
 ```bash
-./ctw.py -i quadratic -c soft ./test/data/data1.csv ./out1.wav
+./ctw.py -m 100 ./test/data/data0.csv ./out0.wav
+```
+
+Mit Interpolation, soft clipping und generierter X-Achse:
+
+```bash
+./ctw.py -i quadratic -c soft --gen-x ./test/data/data1.csv ./out1.wav
 ```
 
 Mit template plugin und anderem csv Format:
@@ -210,19 +217,24 @@ Ist die `--multichannel` flag gesetz wird versucht die weiteren Signale als weit
 ### Data Handling
 
 1. Plugin init hook
-1. CSV Parsing
-1. Plugin read hook
-1. Daten Manipulieren
+2. CSV Parsing
+3. Plugin read hook
+4. Daten Manipulieren
    1. Validieren
+    - Alle Invalieden Daten (NaN) werden auf 0 gesetzt
+    - Die X-Achse muss streng monoton steigend sein
    2. Normalisiern (Wertemenge auf -1.0 bis 1.0)
+    - Die Werte werden durch den mit `-m` angegebenen Wert geteilt, wird kein Wert angegeben, werden sie durch den größten Wert in der Datenmenge (ohne X-Ache) geteilt.
    3. Bias hinzufügen
    4. Interpolieren
+    - benutzt die `scipy.interpolate.interp1d` methode, alle Interpolations-argumente sind valide.
    5. Clipping
-1. Plugin modify hook
-1. Daten Skalieren (Auf angegebenen Datentyp und dessen Reichweite konvertieren)
-1. Plugin scale hook
-1. wav schreiben
-1. Plugin save hook
+    - Daten die durch die Modifikationen außerhalb des validen Bereichs gekommen sind werden entweder hard oder soft geclipped. Soft-Clipping verzerrt das Signal, lässt aber mehr werte bestehen.
+5. Plugin modify hook
+6. Daten Skalieren (Auf angegebenen Datentyp und dessen Reichweite konvertieren)
+7. Plugin scale hook
+8. wav schreiben
+9. Plugin save hook
 
 ## Zukunft
 

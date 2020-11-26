@@ -45,6 +45,9 @@ def parse_args():
     wav_group.add_argument("--bias", dest="bias",
                            help="Value Bias ",
                            default=0.0, type=float)
+    wav_group.add_argument("-m", "--max", dest="maxVal",
+                           help="Maximum Value ",
+                           default=None, type=float)
     wav_group.add_argument("-c", "--clipping", dest="clipping",
                            help="clipping handling",
                            choices=["hard", "soft"],

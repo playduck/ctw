@@ -34,12 +34,17 @@ def validate_data(args, data):
 
 def normalize_data(args, data):
     maxValue = 0
-    for col in data.columns:
-        if col == "x":
-            continue
-        # optimize?
-        maxColVal = max(data[col].max(), abs(data[col].min()))
-        maxValue = max(maxColVal, maxValue)
+
+    if args.maxVal == None:
+        log.debug("No Max Value specified, finding one from given Data")
+        for col in data.columns:
+            if col == "x":
+                continue
+            # optimize?
+            maxColVal = max(data[col].max(), abs(data[col].min()))
+            maxValue = max(maxColVal, maxValue)
+    else:
+        maxValue = args.maxVal
 
     log.debug("Max Value is {}".format(maxValue))
 
@@ -125,6 +130,5 @@ def handle_clipping(args, data):
                 (1.0 + np.exp(alpha * (data[col] + 0.5))),
                 (1.0 + np.exp(alpha * (data[col] - 0.5)))
             ))) - 1.0
-            data = normalize_data(args, data)
 
     return data
