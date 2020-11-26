@@ -1,4 +1,5 @@
 <!-- Formatiert mit https://jsonformatter.org/markdown-formatter -->
+
 # CTW 0.1.0-alpha
 
 **CSV to wav**
@@ -7,28 +8,28 @@ _Das Projekt benutzt [Semantic Versioning](https://semver.org)_
 
 Eine Commandline Utility um beliebige `.csv` Dateien in stark anpassbare `.wav` Audio Dateien umzuwandeln.
 
-##  Inhaltsverzeichiss
+## Inhaltsverzeichiss
 
 - [CTW 0.1.0-alpha](#ctw-010-alpha)
-    - [Inhaltsverzeichiss](#inhaltsverzeichiss)
-    - [Installation](#installation)
-        - [Binary](#binary)
-        - [Python Workspace](#python-workspace)
-            - [makefile](#makefile)
-            - [Manuell](#manuell)
-            - [Ausführen](#ausführen)
-    - [Argumente](#argumente)
-        - [Positionsabhängige](#positionsabhängige)
-        - [Optionale](#optionale)
-            - [CSV parser](#csv-parser)
-            - [wav Optionen](#wav-optionen)
-            - [Programm Optionen](#programm-optionen)
-    - [Beispiele](#beispiele)
-    - [Plugins](#plugins)
-    - [Interne Funktionsweise](#interne-funktionsweise)
-        - [CSV Parsing](#csv-parsing)
-        - [Data Handling](#data-handling)
-    - [Zukunft](#zukunft)
+  - [Inhaltsverzeichiss](#inhaltsverzeichiss)
+  - [Installation](#installation)
+    - [Binary](#binary)
+    - [Python Workspace](#python-workspace)
+      - [makefile](#makefile)
+      - [Manuell](#manuell)
+      - [Ausführen](#ausführen)
+  - [Argumente](#argumente)
+    - [Positionsabhängige](#positionsabhängige)
+    - [Optionale](#optionale)
+      - [CSV parser](#csv-parser)
+      - [wav Optionen](#wav-optionen)
+      - [Programm Optionen](#programm-optionen)
+  - [Beispiele](#beispiele)
+  - [Plugins](#plugins)
+  - [Interne Funktionsweise](#interne-funktionsweise)
+    - [CSV Parsing](#csv-parsing)
+    - [Data Handling](#data-handling)
+  - [Zukunft](#zukunft)
 
 ## Installation
 
@@ -62,10 +63,10 @@ Außerdem, setzt der makefile bash oder zsh o.ä. vorraus um das virtuelle Envir
 2. Virtuelles Environment erstellen (optional, empfohlen)
    - `python3 -m venv ./venv`
    - Der command um das venv zu aktivieren ist von Shell zu Shell anders:
-        - bash/zsh: `source ./venv/bin/activate`
-        - cmd.exe: `.\venv\Scripts\activate.bat`
-        - powershell: `.\venv\Scripts\Activate.ps1`
-        - mehr Infos zu anderen Shells [hier](https://docs.python.org/3/library/venv.html)
+     - bash/zsh: `source ./venv/bin/activate`
+     - cmd.exe: `.\venv\Scripts\activate.bat`
+     - powershell: `.\venv\Scripts\Activate.ps1`
+     - mehr Infos zu anderen Shells [hier](https://docs.python.org/3/library/venv.html)
 3. pip upgraden und dependencies installieren
    - (optional) `pip install --upgrade pip`
    - `pip install -r requirements.txt`
@@ -92,9 +93,9 @@ Aufbau:
 
 ### Positionsabhängige
 
-| Name      | Beschreibung                    | Notizen                                                                                |
-| --------- | :------------------------------ | :------------------------------------------------------------------------------------- |
-| `infile`  | Pfad und Datei der Eingabedatei |                                                                                        |
+| Name      | Beschreibung                    | Notizen                                                                               |
+| --------- | :------------------------------ | :------------------------------------------------------------------------------------ |
+| `infile`  | Pfad und Datei der Eingabedatei |                                                                                       |
 | `outfile` | Pfad und Datei der Ausgabedatei | Die Datei wird erstellt und überschreibt bereits existierende Dateien ohne zu fragen! |
 
 ### Optionale
@@ -133,16 +134,19 @@ Aufbau:
 Beispieldateien stehen und `./test/data/` zur verfügung.
 
 Minimum working example:
+
 ```bash
 ./ctw.py ./test/data/data0.csv ./out0.wav
 ```
 
 Mit Interpolation, soft clipping (und impliziert generierter X-Achse):
+
 ```bash
 ./ctw.py -i quadratic -c soft ./test/data/data1.csv ./out1.wav
 ```
 
 Mit template plugin und anderem csv Format:
+
 ```bash
 ./ctw.py -p ./test/plugin_template -x "time" -sep "|" -dec "," ./test/data/data2.csv ./out2.wav
 ```
@@ -167,8 +171,8 @@ Die Reihenfolge der plugins ist von der Reihenfolge des Commands abhängig.
 **Die plugin Flag `-p` erwartet ein Python Modul.**
 Daher muss der Name des Ordners ohne folgenden Slash angegeben werden.
 
-| ✅ richtig | ❌ falsch |
-|---|---|
+| ✅ richtig                  | ❌ falsch                    |
+| --------------------------- | ---------------------------- |
 | `-p ./test/plugin_template` | `-p ./test/plugin_template/` |
 
 Standardmäßig wird `__init__.py` aufgerufen und erwartet, dass die Funktionen global im Modul erreichbar sind.
@@ -207,18 +211,18 @@ Ist die `--multichannel` flag gesetz wird versucht die weiteren Signale als weit
 
 1. Plugin init hook
 1. CSV Parsing
-2. Plugin read hook
-3. Daten Manipulieren
-    1. Validieren
-    2. Normalisiern (Wertemenge auf -1.0 bis 1.0)
-    3. Bias hinzufügen
-    4. Interpolieren
-    5. Clipping
-4. Plugin modify hook
-5. Daten Skalieren (Auf angegebenen Datentyp und dessen Reichweite konvertieren)
-6. Plugin scale hook
-7. wav schreiben
-8. Plugin save hook
+1. Plugin read hook
+1. Daten Manipulieren
+   1. Validieren
+   2. Normalisiern (Wertemenge auf -1.0 bis 1.0)
+   3. Bias hinzufügen
+   4. Interpolieren
+   5. Clipping
+1. Plugin modify hook
+1. Daten Skalieren (Auf angegebenen Datentyp und dessen Reichweite konvertieren)
+1. Plugin scale hook
+1. wav schreiben
+1. Plugin save hook
 
 ## Zukunft
 
