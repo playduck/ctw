@@ -8,10 +8,10 @@ _Das Projekt benutzt [Semantic Versioning](https://semver.org)_
 
 Eine Commandline Utility um beliebige `.csv` Dateien in stark anpassbare `.wav` Audio Dateien umzuwandeln.
 
-## Inhaltsverzeichiss
+## Inhaltsverzeichnis
 
 - [CTW 0.2.0-alpha](#ctw-020-alpha)
-   - [Inhaltsverzeichiss](#inhaltsverzeichiss)
+   - [Inhaltsverzeichnis](#inhaltsverzeichnis)
    - [Installation](#installation)
       - [Binary](#binary)
       - [Python Workspace](#python-workspace)
@@ -46,8 +46,8 @@ Das Programm benutzt Python 3.9. (frühere Versionen von Python 3 werden wahrsch
 
 `make init`
 
-Das setzt vorraus dass Python 3.9 auf dem path unter dem Namen `python3` zur verfügung steht.
-Außerdem, setzt der makefile bash oder zsh o.ä. vorraus um das virtuelle Environment zu aktivieren.
+Das setzt voraus dass Python 3.9 auf dem path unter dem Namen `python3` zur Verfügung steht.
+Außerdem, setzt der makefile bash oder zsh o.ä. voraus um das virtuelle Environment zu aktivieren.
 
 ---
 
@@ -101,8 +101,8 @@ Aufbau:
 | ------ | ------------- | :------------------------- | -------- | :------------------------------------------------------------------------------------------------- |
 | `-sep` | `--seperator` | CSV Wert Separator         | `;`      |                                                                                                    |
 | `-dec` | `--decimal`   | Kommastellen Zeichen       | `.`      |                                                                                                    |
-| `-x`   | `--x-axis`    | CSV Headername der X-Achse | `None`   | Bei `None` wird die erste Spalte automatisch als X-Achse interpretiert.                            |
-|        | `--gen-x`     | X-Achse generieren         |          | Jedes Sample wird eine Sekunde zugeordnet. Die Option ist nicht mit `-x` gleichzeitig zu benutzen. |
+| `-x`   | `--x-axis`    | CSV Headername der x-Achse | `None`   | Bei `None` wird die erste Spalte automatisch als x-Achse interpretiert.                            |
+|        | `--gen-x`     | x-Achse generieren         |          | Jedes Sample wird eine Sekunde zugeordnet. Die Option ist nicht mit `-x` gleichzeitig zu benutzen. |
 
 #### wav Optionen
 
@@ -113,8 +113,8 @@ Aufbau:
 | `-m`   | `--max`             | Maximal Wert der Daten | `None`   | Bei `None` werden die Daten durch den größten gefundenen Wert geteilt, sonst durch den angegebenen |
 |        | `--bias`            | DC-Offset              | `0.0`    |                                                                                                    |
 | `-c`   | `--clipping`        | Clipping Methode       | `hard`   | Mögliche Optionen: `hard`, `soft`                                                                  |
-| `-i`   | `--interpolation`   | Interpolations Methode | `linear` | Mögliche Optionen: `nearest`, `linear`, `quadratic`, `cubic`                                       |
-|        | `--multichannel`     | Mono/Mehr Kanäle       |          | Wenn gesetzt werden mehr kanalige (bis 64) wav Dateien erstellt, sonst Mono Dateien pro Spalte     |
+| `-i`   | `--interpolation`   | Interpolationsmethode  | `linear` | Mögliche Optionen: `nearest`, `linear`, `quadratic`, `cubic`                                       |
+|        | `--multichannel`    | Mono/Mehr Kanäle       |          | Wenn gesetzt werden mehr kanalige (bis 64) wav Dateien erstellt, sonst Mono Dateien pro Spalte     |
 
 #### Programm Optionen
 
@@ -127,7 +127,7 @@ Aufbau:
 
 ## Beispiele
 
-Beispieldateien stehen und `./test/data/` zur verfügung.
+Beispieldateien stehen unter `./test/data/` zur Verfügung.
 
 Minimum working example:
 
@@ -141,13 +141,13 @@ Werte als Prozentualer Wert (zwischen -100% und 100%):
 ./ctw.py -m 100 ./test/data/data0.csv ./out0.wav
 ```
 
-Mit Interpolation, soft clipping und generierter X-Achse:
+Mit Interpolation, soft clipping und generierter x-Achse:
 
 ```bash
 ./ctw.py -i quadratic -c soft --gen-x ./test/data/data1.csv ./out1.wav
 ```
 
-Mit template plugin und anderem csv Format:
+Mit `template_plugin` und anderem csv Format:
 
 ```bash
 ./ctw.py -p ./test/plugin_template -x "time" -sep "|" -dec "," ./test/data/data2.csv ./out2.wav
@@ -162,15 +162,15 @@ Mit template plugin und anderem csv Format:
 Plugins sind python skripte, die vom Nutzer angegeben werden und die internen Daten während der Ausführung modifizieren können.
 Damit können beispielsweise eigene Algorithmen implementiert werden oder die Daten einfach genauer beobachtet werden.
 
-Ein [Beispiel Plugin](./test/plugin_template/__init__.py) steht zur verfügung.
-Die Funktionssignaturen können sich während des Developments verändern.
-Zu beachten ist, dass importierte Packete sowohl für ctw.py als auch für das plugin zur verfügung stehen.
-(Ergo: Entweder Packete global installieren oder ctw und plugin in gleichem venv ausführen.)
+Ein [Beispiel Plugin](./test/plugin_template/__init__.py) steht zur Verfügung.
+Die Funktionssignaturen können sich während des Development verändern.
+Zu beachten ist, dass importierte Pakete sowohl für ctw.py als auch für das Plugin zur Verfügung stehen.
+(Ergo: Entweder Pakete global installieren oder ctw und Plugin in gleichem venv ausführen.)
 
 Mehrere Plugins könnnen gleichzeitig genutzt werden, indem mehrere `-p` flags benutzt werden.
-Die Reihenfolge der plugins ist von der Reihenfolge des Commands abhängig.
+Die Reihenfolge der Plugins ist von der Reihenfolge des Commands abhängig.
 
-**Die plugin Flag `-p` erwartet ein Python Modul.**
+**Die Plugin Flag `-p` erwartet ein Python Modul.**
 Daher muss der Name des Ordners ohne folgenden Slash angegeben werden.
 
 | ✅ richtig                  | ❌ falsch                    |
@@ -178,14 +178,14 @@ Daher muss der Name des Ordners ohne folgenden Slash angegeben werden.
 | `-p ./test/plugin_template` | `-p ./test/plugin_template/` |
 
 Standardmäßig wird `__init__.py` aufgerufen und erwartet, dass die Funktionen global im Modul erreichbar sind.
-Das Plugin kann wie jedes andere Python Modul mehere Dateien und anderes besitzen.
+Das Plugin kann wie jedes andere Python Modul mehrere Dateien und anderes besitzen.
 Die erwarteten Funktionen sind:
 
-- init_hook
-- read_hook
-- modify_hook
-- scale_hook
-- save_hook
+- `init_hook`
+- `read_hook`
+- `modify_hook`
+- `scale_hook`
+- `save_hook`
 
 Als Referenz für Übergabeparameter und erwartete Rückgabetypen siehe das [Beispiel Plugin](./test/plugin_template/__init__.py).
 
@@ -193,20 +193,20 @@ Als Referenz für Übergabeparameter und erwartete Rückgabetypen siehe das [Bei
 
 ### CSV Parsing
 
-CSV Dateien sollten in der ersten Zeile einen Header haben, welche die Spalten benennte.
+CSV Dateien sollten in der ersten Zeile einen Header haben, welche die Spalten benannte.
 Es sollte wenigstens eine Zeile existieren.
 Der Delimiter/Seperator und Zehner-Stelle könnnen mit `-sep` und `-dec` respektiv angepasst werden.
 
-Wird keine explizite X-Achse angegeben, wird die erste (Spalte ganz links) als X-Achse verwendet.
+Wird keine explizite x-Achse angegeben, wird die erste (Spalte ganz links) als x-Achse verwendet.
 
-Existiert nur eine Spalte, wird ein X-Achse erstellt. Jedes Sample (Y-Wert) wird dann eine Sekunde gegeben.
+Existiert nur eine Spalte, wird ein x-Achse erstellt. Jedes Sample (Y-Wert) wird dann eine Sekunde gegeben.
 Diese Option kann auch mit `--gen-x` explizit verwendet werden.
 
-Wird mit `-x` eine X-Achse angegeben, wird diese verwendet.
-Die X-Achse muss stetig monoton steigen.
+Wird mit `-x` eine x-Achse angegeben, wird diese verwendet.
+Die x-Achse muss stetig monoton steigen.
 
 Existieren mehr als drei Spalten (Zwei Spalten mit `--gen-x`), werden weitere Spalten als weitere "Signale" interpretiert.
-Im Normalfall werden mehrere .wav Dateien (mit gleicher X-Achse) erstellt.
+Im Normalfall werden mehrere .wav Dateien (mit gleicher x-Achse) erstellt.
 Ist die `--multichannel` flag gesetz wird versucht die weiteren Signale als weitere Kanäle in eine .wav einzubringen.
 
 ### Data Handling
@@ -216,15 +216,15 @@ Ist die `--multichannel` flag gesetz wird versucht die weiteren Signale als weit
 3. Plugin read hook
 4. Daten Manipulieren
    1. Validieren
-      - Alle Invalieden Daten (NaN) werden auf 0 gesetzt
-      - Die X-Achse muss streng monoton steigend sein
-   2. Normalisiern (Wertemenge auf -1.0 bis 1.0)
+      - Alle nvaliden Daten (NaN) werden auf 0 gesetzt
+      - Die x-Achse muss streng monoton steigend sein
+   2. Normalisieren (Wertemenge auf -1.0 bis 1.0)
       - Die Werte werden durch den mit `-m` angegebenen Wert geteilt, wird kein Wert angegeben, werden sie durch den größten Wert in der Datenmenge (ohne X-Ache) geteilt.
    3. Bias hinzufügen
    4. Interpolieren
-      - benutzt die `scipy.interpolate.interp1d` methode, alle Interpolations-argumente sind valide.
+      - benutzt die `scipy.interpolate.interp1d` Methode, alle Interpolationsargumente sind valide.
    5. Clipping
-      - Daten die durch die Modifikationen außerhalb des validen Bereichs gekommen sind werden entweder hard oder soft geclipped. Soft-Clipping verzerrt das Signal, lässt aber mehr werte bestehen.
+      - Daten, die durch die Modifikationen außerhalb des validen Bereichs gekommen sind, werden entweder hard oder soft geclipped. Soft-Clipping verzerrt das Signal, lässt aber mehr werte bestehen.
 5. Plugin modify hook
 6. Daten Skalieren (Auf angegebenen Datentyp und dessen Reichweite konvertieren)
 7. Plugin scale hook
@@ -234,7 +234,7 @@ Ist die `--multichannel` flag gesetz wird versucht die weiteren Signale als weit
 ## Zukunft
 
 Weitere Dokumentation und Features folgen.
-In [TODO.md](./TODO.md) befindet sich eine Liste an möglichen änderungen etc.
+In [TODO.md](./TODO.md) befindet sich eine Liste an möglichen Änderungen etc.
 
 ---
 
