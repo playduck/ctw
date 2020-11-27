@@ -60,10 +60,12 @@ def normalize_data(args, data):
 
 def add_bias(args, data):
     log.debug("Adding Bias")
-    for col in data.columns:
-        if col == "x":
-            continue
-        data[col] = np.add(data[col], args.bias)
+
+    if args.bias != 0.0:
+        for col in data.columns:
+            if col == "x":
+                continue
+            data[col] = np.add(data[col], args.bias)
 
     return data
 
