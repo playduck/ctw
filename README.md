@@ -1,6 +1,6 @@
 <!-- Formatiert mit https://jsonformatter.org/markdown-formatter -->
 
-# CTW 0.1.0-alpha
+# CTW 0.2.0-alpha
 
 **CSV to wav**
 
@@ -10,32 +10,32 @@ Eine Commandline Utility um beliebige `.csv` Dateien in stark anpassbare `.wav` 
 
 ## Inhaltsverzeichiss
 
-- [CTW 0.1.0-alpha](#ctw-010-alpha)
-  - [Inhaltsverzeichiss](#inhaltsverzeichiss)
-  - [Installation](#installation)
-    - [Binary](#binary)
-    - [Python Workspace](#python-workspace)
-      - [makefile](#makefile)
-      - [Manuell](#manuell)
-      - [Ausführen](#ausführen)
-  - [Argumente](#argumente)
-    - [Positionsabhängige](#positionsabhängige)
-    - [Optionale](#optionale)
-      - [CSV parser](#csv-parser)
-      - [wav Optionen](#wav-optionen)
-      - [Programm Optionen](#programm-optionen)
-  - [Beispiele](#beispiele)
-  - [Plugins](#plugins)
-  - [Interne Funktionsweise](#interne-funktionsweise)
-    - [CSV Parsing](#csv-parsing)
-    - [Data Handling](#data-handling)
-  - [Zukunft](#zukunft)
+- [CTW 0.2.0-alpha](#ctw-020-alpha)
+   - [Inhaltsverzeichiss](#inhaltsverzeichiss)
+   - [Installation](#installation)
+      - [Binary](#binary)
+      - [Python Workspace](#python-workspace)
+         - [makefile](#makefile)
+         - [Manuell](#manuell)
+         - [Ausführen](#ausführen)
+   - [Argumente](#argumente)
+      - [Positionsabhängige](#positionsabhängige)
+      - [Optionale](#optionale)
+         - [CSV parser](#csv-parser)
+         - [wav Optionen](#wav-optionen)
+         - [Programm Optionen](#programm-optionen)
+   - [Beispiele](#beispiele)
+   - [Plugins](#plugins)
+   - [Interne Funktionsweise](#interne-funktionsweise)
+      - [CSV Parsing](#csv-parsing)
+      - [Data Handling](#data-handling)
+   - [Zukunft](#zukunft)
 
 ## Installation
 
 ### Binary
 
-Unter dem `Releases` Tab auf Github die neuste binary runterladen.
+Unter dem [`Releases`](https://github.com/playduck/ctw/releases) Tab auf Github die neuste binary runterladen.
 Einfach, jedoch nicht sehr flexibel und nicht für GNU Linux zur verfügung.
 
 **Momentan auch nicht für Windows verfügbar.**
