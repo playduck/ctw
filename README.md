@@ -38,11 +38,6 @@ Eine Commandline Utility um beliebige `.csv` Dateien in stark anpassbare `.wav` 
 Unter dem [`Releases`](https://github.com/playduck/ctw/releases) Tab auf Github die neuste binary runterladen.
 Einfach, jedoch nicht sehr flexibel und nicht für GNU Linux zur verfügung.
 
-**Momentan auch nicht für Windows verfügbar.**
-Die `pyinstaller` binary hat noch irgendwelche Probleme.
-In Zukunft soll die binary auch auf Windows funktionieren.
-Für Windows wird die Manuelle Installation empfohlen.
-
 ### Python Workspace
 
 Das Programm benutzt Python 3.9. (frühere Versionen von Python 3 werden wahrscheinlich auch funktionieren.)
