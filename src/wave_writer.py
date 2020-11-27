@@ -9,11 +9,12 @@ log = logging.getLogger("rich")
 
 dt = None
 
-
 def scale_data(args, data):
     global dt
 
     log.debug("scaling data to {}".format(args.bps))
+    if (len(data.columns)-1) >= 100:
+        log.info("Scaling Data for {} Channels is going to take a while longer.".format(len(data.columns) - 1))
 
     # floating
     if args.bps == "32f":
@@ -25,6 +26,7 @@ def scale_data(args, data):
         return data
 
     # fixed
+    output_range = (0,0)
     if args.bps == "u8":
         output_range = (0, 2**8 - 1)
         dt = np.uint8
@@ -35,17 +37,17 @@ def scale_data(args, data):
         output_range = (-2**31, 2**31 - 1)
         dt = np.int32
 
-    for col in data.columns:
+    for index, col in enumerate(data.columns):
         if col == "x":
             continue
-        data[col] = np.round(
-            np.interp(
-                data[col],
-                (-1.0,
-                 1.0),
-                output_range),
-            decimals=0)
-        data[col] = data[col].astype(dt)
+
+        if index % 100 == 0:
+            log.info("Still scaling... ({}/{})".format(index, len(data.columns)-1))
+
+        # this takes an eternity
+        # TODO optimize this somehow, maybe multithreading?
+        data[col] = np.interp(data[col], (-1.0, 1.0), output_range).astype(dt)
+
     return data
 
 
