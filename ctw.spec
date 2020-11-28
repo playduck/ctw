@@ -6,6 +6,7 @@ import sys
 import importlib
 
 print("Platform: ", sys.platform)
+print("Path: ", os.path.abspath("./src/main.py"))
 
 block_cipher = None
 hiddenimports=[
@@ -40,7 +41,7 @@ if sys.platform == "darwin":
             strip=False,
             upx=True,
             runtime_tmpdir=None,
-            console=False,
+            console=True,
             icon=None
 )
 elif sys.platform == "win32" or sys.platform == "win64" or sys.platform == "linux":
@@ -55,7 +56,7 @@ elif sys.platform == "win32" or sys.platform == "win64" or sys.platform == "linu
             strip=False,
             upx=True,
             runtime_tmpdir=None,
-            console=False,
+            console=True,
             icon=None
 )
 
@@ -73,7 +74,7 @@ if sys.platform == "darwin":
             icon=None
 )
 
-elif sys.platform == "win32" or sys.platform == "win64" or sys.platform == "linux":
+elif sys.platform == "win32" or sys.platform == "win64":
     coll = COLLECT(exe,
             a.binaries,
             a.zipfiles,
