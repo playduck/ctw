@@ -58,18 +58,23 @@ Außerdem, setzt der makefile bash oder zsh o.ä. voraus um das virtuelle Enviro
 
 #### Manuell
 
-1. Repository klonen
-   - `git clone https://github.com/playduck/ctw.git`
-2. Virtuelles Environment erstellen (optional, empfohlen)
-   - `python3 -m venv ./venv`
-   - Der command um das venv zu aktivieren ist von Shell zu Shell anders:
-     - bash/zsh: `source ./venv/bin/activate`
-     - cmd.exe: `.\venv\Scripts\activate.bat`
-     - powershell: `.\venv\Scripts\Activate.ps1`
-     - mehr Infos zu anderen Shells [hier](https://docs.python.org/3/library/venv.html)
-3. pip upgraden und dependencies installieren
-   - (optional) `pip install --upgrade pip`
-   - `pip install -r requirements.txt`
+```bash
+$ git clone https://github.com/playduck/ctw.git
+$ python3 -m venv ./venv # virtual env (optional but recommended)
+```
+```bash
+# activate venv, depends on shell
+$ source ./venv/bin/activate # bash/zsh
+$ venv\Scripts\activate.bat # batch
+$ venv\Scripts\Activate.ps1 #ps1
+```
+Mehr Infos zu anderen Shells [hier](https://docs.python.org/3/library/venv.html)
+```bash
+$ pip install --upgrade pip
+$ pip install -r requirements.txt
+
+$ python ctw.py
+```
 
 ---
 
