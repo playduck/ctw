@@ -1,10 +1,10 @@
 import logging
-
-import numpy as np
-import pandas as pd
+from timeit import default_timer as timer
 
 log = logging.getLogger("rich")
 
+from numpy import linspace, float64
+from pandas import DataFrame, read_csv
 
 def rename_axes(args, read_df):
     if args.xaxis is None:
@@ -46,22 +46,22 @@ def generate_axes(args, read_df):
 
     log.debug(
         "generating linear X-Axis from {} to {} with {} steps".format(0, samples - 1, samples))
-    x = np.linspace(0, samples - 1, samples)
+    x = linspace(0, samples - 1, samples)
 
     tagged_data = {"x": x}
     for index, col in enumerate(read_df.columns):
         tagged_data["y" + str(index)] = read_df[col].values
 
     log.debug("Dataframe output names: {}".format(tagged_data.keys()))
-    return pd.DataFrame(tagged_data)
+    return DataFrame(tagged_data)
 
 
 def read_file(args):
     log.debug("Parsing CSV file {}".format(args.infile[0]))
-    read_df = pd.read_csv(args.infile[0],
+    read_df = read_csv(args.infile[0],
                           sep=args.seperator,
                           decimal=args.decimal,
-                          dtype=np.float64
+                          dtype=float64
                           )
 
     if (len(read_df.columns) > 1) and not args.genx:

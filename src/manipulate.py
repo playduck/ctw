@@ -1,7 +1,7 @@
 import logging
 
 import numpy as np
-import pandas as pd
+from pandas import DataFrame
 import scipy.interpolate
 
 log = logging.getLogger("rich")
@@ -105,7 +105,7 @@ def interpolate_data(args, data):
         y = spl(xnew)
         values[col] = y
 
-    df = pd.DataFrame(data=values)
+    df = DataFrame(data=values)
 
     return df
 
