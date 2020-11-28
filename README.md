@@ -38,11 +38,6 @@ Eine Commandline Utility um beliebige `.csv` Dateien in stark anpassbare `.wav` 
 Unter dem [`Releases`](https://github.com/playduck/ctw/releases) Tab auf Github die neuste binary runterladen.
 Einfach, jedoch nicht sehr flexibel und nicht für GNU Linux zur verfügung.
 
-**Die Binarys sind auch _wesentlich_ langsamer als das Projekt dynamisch mit `python` auszuführen**.
-Dieses liegt zumal an dem unvermeidbaren startup delay durch pyinstaller, als auch an den langen import Zeiten von numpy und pandas.
-Das [Issue](https://github.com/pandas-dev/pandas/issues/7282) besteht schon seit 2014.
-Wenn möglich, wird die dynamische Ausführung mit `python` bevorzugt.
-
 ### Python Workspace
 
 Das Programm benutzt Python 3.9. (frühere Versionen von Python 3 werden wahrscheinlich auch funktionieren.)
