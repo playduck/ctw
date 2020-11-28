@@ -2,5 +2,6 @@
     "files.associations": {
         "*.spec": "python"
     },
-    "cSpell.enabled": false
+    "cSpell.enabled": false,
+    "python.pythonPath": "./venv/bin/python3.9"
 }
