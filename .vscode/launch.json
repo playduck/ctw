@@ -1,0 +1,20 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "ctw main no args",
+            "type": "python",
+            "request": "launch",
+            "program": "./ctw.py",
+            "console": "integratedTerminal"
+        },
+        {
+            "name": "ctw main plugin",
+            "type": "python",
+            "request": "launch",
+            "program": "./ctw.py",
+            "args": ["-m", "100", "-p", "./test/plugin_template", "./test/data/data0.csv", "./out.wav"],
+            "console": "integratedTerminal"
+        }
+    ]
+}
