@@ -1,4 +1,4 @@
-# -*- mode: python -*-
+# -*- mode: python ; coding: utf-8 -*-
 
 from pathlib import Path
 import os
@@ -13,13 +13,13 @@ hiddenimports=[
 ]
 
 a = Analysis([os.path.abspath("./src/main.py")],
-            pathex=[os.path.abspath("./src/")],
-            binaries=None,
-            datas=None,
+            pathex=[os.path.abspath("./")],
+            binaries=[],
+            datas=[],
             hiddenimports=hiddenimports,
-            hookspath=None,
-            runtime_hooks=None,
-            excludes=None,
+            hookspath=[],
+            runtime_hooks=[],
+            excludes=[],
             win_no_prefer_redirects=False,
             win_private_assemblies=False,
             cipher=block_cipher,
@@ -32,10 +32,8 @@ pyz = PYZ(a.pure, a.zipped_data,
 if sys.platform == "darwin":
     exe = EXE(pyz,
             a.scripts,
-            a.binaries,
-            a.zipfiles,
-            a.datas,
             name="ctw",
+            exclude_binaries=True,
             debug=False,
             bootloader_ignore_signals=False,
             strip=False,
@@ -59,9 +57,25 @@ elif sys.platform == "win32" or sys.platform == "win64" or sys.platform == "linu
             console=True,
             icon=None
 )
+else:
+    print("No Target for ", sys.platform)
+    sys.exit(1)
+
 
 if sys.platform == "darwin":
+    coll = COLLECT(exe,
+            a.binaries,
+            a.zipfiles,
+            a.datas,
+            strip=False,
+            upx=True,
+            upx_exclude=[],
+            name='ctw'
+    )
     app = BUNDLE(exe,
+            a.binaries,
+            a.zipfiles,
+            a.datas,
             name="ctw.app",
             info_plist={
                 "NSHighResolutionCapable": "True",
@@ -69,17 +83,17 @@ if sys.platform == "darwin":
                 "NSRequiresAquaSystemAppearance": "True"
                 # should be false to support dark mode
                 # known bug: https://github.com/pyinstaller/pyinstaller/issues/4615 with pyinstaller
-                # need to recompile pyinstaller with SDK >= 10.13
             },
             icon=None
-)
+    )
 
 elif sys.platform == "win32" or sys.platform == "win64":
     coll = COLLECT(exe,
-            a.binaries,
-            a.zipfiles,
-            a.datas,
-            strip=False,
-            upx=True,
-            name="ctw"
-)
+                a.binaries,
+                a.zipfiles,
+                a.datas,
+                strip=False,
+                upx=True,
+                upx_exclude=[],
+                name='ctw'
+    )

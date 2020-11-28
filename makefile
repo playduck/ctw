@@ -6,7 +6,7 @@ BSPEC := ./ctw.spec
 BFLAGS := \
 	--clean \
 	--noconfirm \
-	--onedir \
+	--onefile \
 	--name $(BDEST) \
 	--distpath $(DIST) \
 	--workpath $(BIN)
