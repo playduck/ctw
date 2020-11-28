@@ -9,13 +9,10 @@ print("Platform: ", sys.platform)
 
 block_cipher = None
 hiddenimports=[
-    "pkg_resources",
-    "matplotlib",
-    "pylab"
 ]
 
 a = Analysis([os.path.abspath("./src/main.py")],
-            pathex=[os.path.abspath("./")],
+            pathex=[os.path.abspath("./src/")],
             binaries=None,
             datas=None,
             hiddenimports=hiddenimports,
