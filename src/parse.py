@@ -4,7 +4,7 @@ import sys
 
 def parse_args():
     parser = argparse.ArgumentParser(
-        prog='tool',
+        prog='CTW',
         description="CSV to Wav Converter",
         formatter_class=lambda prog: argparse.HelpFormatter(
             prog,
