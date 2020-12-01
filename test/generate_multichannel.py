@@ -3,13 +3,16 @@
 import csv
 import random
 
-channels = 1000
-elements = 2
+channels = 1
+elements = 100000
+time_end = 60 * 10 # in s
 
 data = dict()
 data["x"] = list()
+
+delta_time = time_end / elements
 for i in range(elements):
-    data["x"].append(i)
+    data["x"].append(i * delta_time)
 
 for i in range(channels):
     name = "value_" + str(i)
