@@ -52,6 +52,7 @@ def normalize_data(args, data):
         if col == "x":
             continue
         data[col] = np.true_divide(data[col], maxValue)
+        print(data[col])
 
     return data
 
@@ -59,7 +60,7 @@ def normalize_data(args, data):
 
 
 def add_bias(args, data):
-    log.debug("Adding Bias")
+    log.debug("Adding Bias ({})".format(args.bias))
 
     if args.bias != 0.0:
         for col in data.columns:
@@ -84,12 +85,43 @@ def interpolate_data(args, data):
         "from {} s to {} s (delta: {} s) with {} samples".format(
             start, stop, delta, samples))
 
-    xnew = np.linspace(start=start, stop=stop, num=samples)
+    # generate new x-axis
+    #xnew = np.linspace(start=start, stop=stop, num=samples, dtype=np.int64)
+
+    axis_fragments = list()
+    max_frament = 1000000
+    # if we have too many samples 
+    if samples > max_frament:
+        delta_time = round(max_frament / args.samplerate)
+        amt_time =  int(round(delta / delta_time))
+
+        for i in range(amt_time):
+            fragment_start = int(round(i * delta_time + start))
+            fragment_end = int(round(min(((i+1) * delta_time + start, stop))))
+            fragment_samples = (fragment_end - fragment_start) * args.samplerate
+            
+            axis_fragments.append(
+                # type of fragments must be float, otherwise interp1d acts like kind=="next"
+                # i don't know why (presumably since data["x"] is also float)
+                # just roll with it
+                np.linspace(start=fragment_start, stop=fragment_end, num=fragment_samples, dtype=np.float32)
+            )
+    else:
+        axis_fragments.append(
+            np.linspace(start=start, stop=stop, num=samples, dtype=np.int64)
+        )
 
     values = {}
-    for col in data.columns:
+    for index, col in enumerate(data.columns):
         if col == "x":
-            values[col] = xnew
+            # TODO this isn't better than just not fragementing,
+            # maybe use multiple object (might break plugins)
+            # or use memory to disk mapping
+            for i, f in enumerate(axis_fragments):
+                if i == 0:
+                    values[col] = f
+                else:
+                    values[col] = np.concatenate((values[col] ,f))
             continue
 
         spl = scipy.interpolate.interp1d(
@@ -97,12 +129,18 @@ def interpolate_data(args, data):
             data[col].values,
             kind=args.interpolation,
             copy=False,
-            assume_sorted=False,
-            bounds_error=False,
-            fill_value="extrapolate"
+            assume_sorted=True,
+            bounds_error=True,
         )
 
-        y = spl(xnew)
+        for i, f in enumerate(axis_fragments):
+            render = spl(f)
+
+            if i == 0:
+                y = render
+            else:
+                y = np.concatenate((y ,render))
+
         values[col] = y
 
     df = DataFrame(data=values)
