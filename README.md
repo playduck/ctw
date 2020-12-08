@@ -1,6 +1,6 @@
 <!-- Formatiert mit https://jsonformatter.org/markdown-formatter -->
 
-# CTW 0.2.0-alpha
+# CTW 0.3.0-alpha
 
 **CSV to wav**
 
@@ -10,7 +10,7 @@ Eine Commandline Utility um beliebige `.csv` Dateien in stark anpassbare `.wav` 
 
 ## Inhaltsverzeichnis
 
-- [CTW 0.2.0-alpha](#ctw-020-alpha)
+- [CTW 0.3.0-alpha](#ctw-030-alpha)
    - [Inhaltsverzeichnis](#inhaltsverzeichnis)
    - [Installation](#installation)
       - [Binary](#binary)
