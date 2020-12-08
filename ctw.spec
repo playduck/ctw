@@ -15,7 +15,7 @@ hiddenimports=[
 ]
 
 a = Analysis([os.path.abspath("./src/main.py")],
-            pathex=[os.path.abspath("./")],
+            pathex=[os.path.abspath("./src")],
             binaries=[],
             datas=[],
             hiddenimports=hiddenimports,
