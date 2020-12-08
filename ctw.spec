@@ -5,6 +5,8 @@ import os
 import sys
 import importlib
 
+name = "ctw-core"
+
 print("Platform: ", sys.platform)
 print("Path: ", os.path.abspath("./src/main.py"))
 
@@ -32,7 +34,7 @@ pyz = PYZ(a.pure, a.zipped_data,
 if sys.platform == "darwin":
     exe = EXE(pyz,
             a.scripts,
-            name="ctw",
+            name=name,
             exclude_binaries=True,
             debug=False,
             bootloader_ignore_signals=False,
@@ -48,7 +50,7 @@ elif sys.platform == "win32" or sys.platform == "win64" or sys.platform == "linu
             # a.binaries,
             # a.zipfiles,
             # a.datas,
-            name="ctw",
+            name=name,
             exclude_binaries=True,
             debug=False,
             bootloader_ignore_signals=False,
@@ -71,13 +73,13 @@ if sys.platform == "darwin":
             strip=False,
             upx=True,
             upx_exclude=[],
-            name='ctw'
+            name=name
     )
     app = BUNDLE(exe,
             a.binaries,
             a.zipfiles,
             a.datas,
-            name="ctw.app",
+            name=name+".app",
             info_plist={
                 "NSHighResolutionCapable": "True",
                 "LSBackgroundOnly": "False",
@@ -96,5 +98,5 @@ elif sys.platform == "win32" or sys.platform == "win64":
                 strip=False,
                 upx=True,
                 upx_exclude=[],
-                name='ctw'
+                name=name
     )
